@@ -1,11 +1,44 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>My Django App</title>
-</head>
+    <head>
+        <title>LatexLetter</title>
+        {% load bootstrap5 %}
+        {% bootstrap_css %}
+        {% bootstrap_javascript %}
+
+        {% load static %}
+        <link rel="stylesheet" href="{% static '/letterui/styles.css' %}">
+      </head>
 <body>
-    <h1>Hello, Django!</h1>
+  {% csrf_token %}
+    <div class="container">
+        <div class="container">
+            <div class="row">
+              <div class="col heading">
+                <h1>Latex Letter Template Generator</h1>
+              </div>
+            </div>
+            <div class="row">
+                <ul class="nav nav-tabs">
+                    <li class="nav-item">
+                      <a class="nav-link {% if currentview == 'sender' %}primary{% endif %}" aria-current="page" href="?currentview=sender">Sender</a>
+                    </li>
+                    <li class="nav-item">
+                      <a class="nav-link" href="?currentview=receiver">Empfänger</a>
+                    </li>
+                    <li class="nav-item">
+                      <a class="nav-link" href="?currentview=business">Geschäftszeilenbla</a>
+                    </li>
+                    <li class="nav-item">
+                      <a class="nav-link" href="?currentview=Inhalt">Inhalt</a>
+                    </li>
+                  </ul>
+            </div>
+            <div class="row">
+              Current Card: {{ currentview }}
+
+            </div>
+          </div>
+    </div>
 </body>
 </html>
