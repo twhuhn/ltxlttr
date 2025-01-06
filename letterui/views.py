@@ -1,5 +1,6 @@
 from django.shortcuts import render
 from .forms import ContactForm
+from .templating import generate_letter_template
 
 # Create your views here.
 def home(request):
@@ -12,7 +13,7 @@ def contact_view(request):
     if request.method == "POST":
         form = ContactForm(request.POST)
         if form.is_valid():
-            message = "Form submitted successfully!"
+            message = generate_letter_template(form)
             form = ContactForm()  # Reset the form after submission
 
     return render(request, "letterui/contact.html", {"form": form, "message": message})
