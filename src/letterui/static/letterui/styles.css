@@ -1,0 +1,26 @@
+.heading {
+    margin: 0 5px 0 5px;
+}
+
+.input-field {
+    margin-top: 5px;
+    margin-bottom: 5px;
+}
+
+.letter-content {
+    margin-top: 10px;
+    margin-bottom: 5px;
+    border-top: 2px solid darkgray;
+}
+
+.subject-field {
+    font-weight: bold;
+}
+
+.subject-field::placeholder {
+    font-weight: normal;
+}
+
+.content-field {
+    font-family: monospace;
+}

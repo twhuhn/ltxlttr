@@ -37,7 +37,9 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'letterui'
+    'django_unicorn',
+    'letterui',
+    'bootstrap5'
 ]
 
 MIDDLEWARE = [

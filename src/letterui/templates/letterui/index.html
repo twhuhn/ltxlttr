@@ -1,11 +1,49 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>My Django App</title>
-</head>
+    <head>
+        <title>LatexLetter</title>
+        {% load bootstrap5 %}
+        {% bootstrap_css %}
+        {% bootstrap_javascript %}
+
+        {% load static %}
+        <link rel="stylesheet" href="{% static '/letterui/styles.css' %}">
+      </head>
 <body>
-    <h1>Hello, Django!</h1>
+  {% csrf_token %}
+        <div class="container">
+            <div class="row">
+              <div class="col heading">
+                <h1>Latex Letter Template Generator</h1>
+              </div>
+            </div>
+              <form>
+                  <div class="row">
+                      <div class="col-md-6">
+                          {{ form.sender_name }}
+                          {{ form.sender_streetaddress }}
+                          {{ form.sender_zipcity }}
+                          {{ form.sender_phone }}
+                          {{ form.sender_phonename }}
+                          {{ form.sender_email }}
+                      </div>
+                      <div class="col-md-6">
+                          {{ form.recipient_addrfield }}
+                      </div>
+                  </div>
+                  <div class="row letter-content">
+                      <div class="col">
+                        {{ form.content_subject }}
+                        {{ form.content_opening }}
+                        {{ form.content_text }}
+                        {{ form.content_closing }}
+                        {{ form.content_ps }}
+                        {{ form.content_enclosing }}
+                        {{ form.content_cc }}
+                      </div>
+                  </div>
+                  <button type="submit" class="btn btn-primary mt-3">Submit</button>
+              </form>
+            </div>
 </body>
 </html>
