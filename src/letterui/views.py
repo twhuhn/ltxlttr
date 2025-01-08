@@ -1,8 +1,9 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from .forms import LatexLetterForm
 from .templating import generate_letter_template
 import os
 import uuid
+import json
 
 # Create your views here.
 def home(request):
@@ -14,6 +15,9 @@ def home(request):
         if form.is_valid():
             message = "Form submitted successfully!"
             print(form.cleaned_data)
+            response = render(request, "letterui/index.html", {"form": form, "message": message})
+            response.set_cookie('content', json.dumps(form.cleaned_data))
+            return response
             message = generate_letter_template(form)
             outfile = create_pdf(message)
 
@@ -37,3 +41,11 @@ def create_pdf(message):
     os.system(f"pdflatex -output-directory={temp_folder} {tex_file_path}")
     return tex_file_path
     pass
+
+def clear(request):
+    response = redirect('/')
+    content_cookie = request.COOKIES.get('content')
+    if content_cookie:
+        response.delete_cookie('content')
+    
+    return response
