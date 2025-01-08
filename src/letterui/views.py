@@ -1,28 +1,26 @@
 from django.shortcuts import render
-from .forms import ContactForm
+from .forms import LatexLetterForm
 from .templating import generate_letter_template
 import os
 import uuid
 
 # Create your views here.
 def home(request):
-    return render(request, 'letterui/index.html')
-
-def contact_view(request):
-    form = ContactForm()
+    form = LatexLetterForm()
     message = ""
 
     if request.method == "POST":
-        form = ContactForm(request.POST)
+        form = LatexLetterForm(request.POST)
         if form.is_valid():
+            message = "Form submitted successfully!"
+            print(form.cleaned_data)
             message = generate_letter_template(form)
             outfile = create_pdf(message)
 
 
+            form = LatexLetterForm()  # Reset the form after submission
 
-            form = ContactForm()  # Reset the form after submission
-
-    return render(request, "letterui/contact.html", {"form": form, "message": message})
+    return render(request, "letterui/index.html", {"form": form, "message": message})
 
 def create_pdf(message):
     # Create a PDF file
