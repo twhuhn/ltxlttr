@@ -24,3 +24,7 @@
 .content-field {
     font-family: monospace;
 }
+
+.clear-button {
+    margin-top: 1rem;
+}
