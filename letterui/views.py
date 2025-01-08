@@ -1,24 +1,16 @@
 from django.shortcuts import render
-from .forms import ContactForm
-
-currentview = ''
+from .forms import LatexLetterForm
 
 # Create your views here.
 def home(request):
-    global currentview
-    newview = request.GET.get('currentview', 'sender')
-    currentview = newview
-    return render(request, 'letterui/index.html', {'currentview': currentview})
-
-def contact_view(request):
-    form = ContactForm()
+    form = LatexLetterForm()
     message = ""
 
     if request.method == "POST":
-        form = ContactForm(request.POST)
+        form = LatexLetterForm(request.POST)
         if form.is_valid():
             message = "Form submitted successfully!"
             print(form.cleaned_data)
-            form = ContactForm()  # Reset the form after submission
+            form = LatexLetterForm()  # Reset the form after submission
 
-    return render(request, "letterui/contact.html", {"form": form, "message": message})
+    return render(request, "letterui/index.html", {"form": form, "message": message})

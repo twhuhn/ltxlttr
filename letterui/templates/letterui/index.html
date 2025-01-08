@@ -11,34 +11,39 @@
       </head>
 <body>
   {% csrf_token %}
-    <div class="container">
         <div class="container">
             <div class="row">
               <div class="col heading">
                 <h1>Latex Letter Template Generator</h1>
               </div>
             </div>
-            <div class="row">
-                <ul class="nav nav-tabs">
-                    <li class="nav-item">
-                      <a class="nav-link {% if currentview == 'sender' %}primary{% endif %}" aria-current="page" href="?currentview=sender">Sender</a>
-                    </li>
-                    <li class="nav-item">
-                      <a class="nav-link" href="?currentview=receiver">Empfänger</a>
-                    </li>
-                    <li class="nav-item">
-                      <a class="nav-link" href="?currentview=business">Geschäftszeilenbla</a>
-                    </li>
-                    <li class="nav-item">
-                      <a class="nav-link" href="?currentview=Inhalt">Inhalt</a>
-                    </li>
-                  </ul>
+              <form>
+                  <div class="row">
+                      <div class="col-md-6">
+                          {{ form.sender_name }}
+                          {{ form.sender_streetaddress }}
+                          {{ form.sender_zipcity }}
+                          {{ form.sender_phone }}
+                          {{ form.sender_phonename }}
+                          {{ form.sender_email }}
+                      </div>
+                      <div class="col-md-6">
+                          {{ form.recipient_addrfield }}
+                      </div>
+                  </div>
+                  <div class="row letter-content">
+                      <div class="col">
+                        {{ form.content_subject }}
+                        {{ form.content_opening }}
+                        {{ form.content_text }}
+                        {{ form.content_closing }}
+                        {{ form.content_ps }}
+                        {{ form.content_enclosing }}
+                        {{ form.content_cc }}
+                      </div>
+                  </div>
+                  <button type="submit" class="btn btn-primary mt-3">Submit</button>
+              </form>
             </div>
-            <div class="row">
-              Current Card: {{ currentview }}
-
-            </div>
-          </div>
-    </div>
 </body>
 </html>
