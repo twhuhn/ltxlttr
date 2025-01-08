@@ -10,14 +10,14 @@
         <link rel="stylesheet" href="{% static '/letterui/styles.css' %}">
       </head>
 <body>
-  {% csrf_token %}
         <div class="container">
             <div class="row">
               <div class="col heading">
                 <h1>Latex Letter Template Generator</h1>
               </div>
             </div>
-              <form>
+              <form method="POST" >
+                {% csrf_token %}
                   <div class="row">
                       <div class="col-md-6">
                           {{ form.sender_name }}
@@ -43,7 +43,8 @@
                       </div>
                   </div>
                   <button type="submit" class="btn btn-primary mt-3">Submit</button>
-              </form>
+                  <a class="btn btn-danger clear-button" href="/clear">Clear</a>
+                </form>
             </div>
 </body>
 </html>
