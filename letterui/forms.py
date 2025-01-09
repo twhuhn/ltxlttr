@@ -20,3 +20,4 @@ class LatexLetterForm(forms.Form):
     content_ps = forms.CharField(required=False, max_length=100, widget=forms.TextInput(attrs={'class': 'form-control input-field', 'placeholder': 'PS'}))
     content_enclosing = forms.CharField(required=False, max_length=100, widget=forms.TextInput(attrs={'class': 'form-control input-field', 'placeholder': 'Enclosing'}))
     content_cc = forms.CharField(required=False, max_length=100, widget=forms.TextInput(attrs={'class': 'form-control input-field', 'placeholder': 'CC'}))
+    
