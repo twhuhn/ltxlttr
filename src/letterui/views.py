@@ -7,8 +7,19 @@ import json
 
 # Create your views here.
 def home(request):
-    form = LatexLetterForm()
     message = ""
+    form = LatexLetterForm()
+
+    content_cookie = request.COOKIES.get('content')
+    if content_cookie:
+        # Try to parse the cookie as json. If it fails, clear the cookie and return an
+        # empty form.
+        try:
+            content_cookie_parsed = json.loads(content_cookie)
+        except:
+            clear(request)
+        
+        form = LatexLetterForm(data=content_cookie_parsed)
 
     if request.method == "POST":
         form = LatexLetterForm(request.POST)
