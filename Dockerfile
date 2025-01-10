@@ -9,6 +9,11 @@ RUN apt-get update && \
     apt-get install -y --no-install-recommends texlive-latex-extra texlive-fonts-extra texlive-lang-all && \
     rm -rf /var/lib/apt/lists/*
 
-RUN pip install pipenv
-#COPY src /ltxlttr
-#WORKDIR /ltxlttr
+COPY src /ltxlttr
+WORKDIR /ltxlttr
+
+EXPOSE 8000
+
+RUN pip install --no-cache-dir -r requirements.txt
+
+CMD ["python", "manage.py", "runserver"]

@@ -1,68 +1,70 @@
 #fugly
 def generate_letter_template_raw(sender_name, sender_streetaddress, sender_zipcity, sender_phone, sender_phonename, sender_email, business_yourref, business_yourmailfrom, business_myref, business_customernumber, business_invoicenumber, business_place, business_date, recipient_addrfield, content_subject, content_opening, content_text, content_closing, content_ps, content_enclosing, content_cc):
   template = """
-\\documentclass[fontsize=12pt, paper=a4, enlargefirstpage=on, pagenumber=headright, headsepline=on, parskip=half, fromalign=right, fromphone=on, fromrule=off, fromfax=off, fromemail=on, fromurl=off, fromlogo=off, addrfield=on, backaddress=on, subject=beforeopening, locfield=narrow, foldmarks=on, numericaldate=off, refline=narrow, draft=off]{scrlttr2}
+\\documentclass[fontsize=12pt, paper=a4, enlargefirstpage=on, pagenumber=headright, headsepline=on, parskip=half, fromalign=right, fromphone=on, fromrule=off, fromfax=off, fromemail=on, fromurl=off, fromlogo=off, addrfield=on, backaddress=on, subject=beforeopening, locfield=narrow, foldmarks=on, numericaldate=off, refline=narrow, draft=off]{{scrlttr2}}
 
-\\usepackage[ngerman]{babel}
-\\usepackage[T1]{fontenc}
-\\usepackage[utf8]{inputenc}
-\\usepackage{url}
+\\usepackage[ngerman]{{babel}}
+\\usepackage[T1]{{fontenc}}
+\\usepackage[utf8]{{inputenc}}
+\\usepackage{{url}}
 
-\\usepackage{marvosym}
-\\DeclareUnicodeCharacter{20AC}{\\EUR}
-\\setkomafont{fromname}{\\sffamily \\LARGE}
-\\setkomafont{fromaddress}{\\sffamily}
-\\setkomafont{pagenumber}{\\sffamily}
-\\setkomafont{subject}{\\bfseries}
-\\setkomafont{backaddress}{\\mdseries}
-\\usepackage{mathptmx}
+\\usepackage{{marvosym}}
+\\DeclareUnicodeCharacter{{20AC}}{{\\EUR}}
+\\setkomafont{{fromname}}{{\\sffamily \\LARGE}}
+\\setkomafont{{fromaddress}}{{\\sffamily}}
+\\setkomafont{{pagenumber}}{{\\sffamily}}
+\\setkomafont{{subject}}{{\\bfseries}}
+\\setkomafont{{backaddress}}{{\\mdseries}}
+\\usepackage{{mathptmx}}
 
 
-\\begin{document}
-\\LoadLetterOption{DIN}
+\\begin{{document}}
+\\LoadLetterOption{{DIN}}
 \\makeatletter
-\\@setplength{firstheadvpos}{20mm}
-\\@setplength{firstheadwidth}{\\paperwidth}
-\\ifdim \\useplength{toaddrhpos}>\\z@
-\\@addtoplength[-2]{firstheadwidth}{\\useplength{toaddrhpos}}
+\\@setplength{{firstheadvpos}}{{20mm}}
+\\@setplength{{firstheadwidth}}{{\\paperwidth}}
+\\ifdim \\useplength{{toaddrhpos}}>\\z@
+\\@addtoplength[-2]{{firstheadwidth}}{{\\useplength{{toaddrhpos}}}}
 \\else
-\\@addtoplength[2]{firstheadwidth}{\\useplength{toaddrhpos}}
+\\@addtoplength[2]{{firstheadwidth}}{{\\useplength{{toaddrhpos}}}}
 \\fi
-\\@setplength{foldmarkhpos}{6.5mm}
+\\@setplength{{foldmarkhpos}}{{6.5mm}}
 \\makeatother
 
-\\setkomavar{fromname}{%(sender_name)s}
-\\setkomavar{fromaddress}{%(sender_streetaddress)s\\\\%(sender_zipcity)s}
-%(fromphone)s
-%(phonename)s
-\\setkomavar{fromemail}{%(sender_email)s}
-\\setkomavar{backaddressseparator}{ -- }
-\\setkomavar{signature}{\\vspace*{1.5cm}\\\\%(sender_name)s}
+\\setkomavar{{fromname}}{{{sender_name}}}
+\\setkomavar{{fromaddress}}{{{sender_streetaddress}\\\\{sender_zipcity}}}
+{fromphone}
+{phonename}
+\\setkomavar{{fromemail}}{{{sender_email}}}
+\\setkomavar{{backaddressseparator}}{{ -- }}
+\\setkomavar{{signature}}{{\\vspace*{{1.5cm}}\\\\{sender_name}}}
 \\makeatother
 
-%(yourref)s
-%(yourmail)s
-%(myref)s
-%(customer)s
-%(invoice)s
-\\setkomavar{place}{%(business_place)s}
-\\setkomavar{date}{%(business_date)s}
-%\\setkomavar{placeseparator}{, den }
+{yourref}
+{yourmail}
+{myref}
+{customer}
+{invoice}
+\\setkomavar{{place}}{{{business_place}}}
+\\setkomavar{{date}}{{{business_date}}}
+%\\setkomavar{{placeseparator}}{{, den }}
 
-%\\renewcommand{\\enclname}{Anlagen}
-%\\setkomavar{enclseparator}{: }
-\\pagestyle{plain}
+%\\renewcommand{{\\enclname}}{{Anlagen}}
+%\\setkomavar{{enclseparator}}{{: }}
+\\pagestyle{{plain}}
 
-\\begin{letter}{%(recipient_addrfield)s}\\setkomavar{subject}{%(content_subject)s}
-\\opening{%(content_opening)s}%(content_text)s\\closing{%(content_closing)s}
+\\begin{{letter}}{{{recipient_addrfield}}}\\setkomavar{{subject}}{{{content_subject}}}
+\\opening{{{content_opening}}}
+{content_text}
+\\closing{{{content_closing}}}
 
-%(ps)s
-%(encl)s
-%(cc)s
+{ps}
+{encl}
+{cc}
 
-\\end{letter}
-\\end{document}
-""" % {
+\\end{{letter}}
+\\end{{document}}
+""".format(**{
           'sender_name': sender_name,
           'sender_streetaddress': sender_streetaddress,
           'sender_zipcity': sender_zipcity,
@@ -76,7 +78,7 @@ def generate_letter_template_raw(sender_name, sender_streetaddress, sender_zipci
           'invoice': f"\\setkomavar{{invoice}}{{{business_invoicenumber}}}" if business_invoicenumber else "",
           'business_place': business_place,
           'business_date': business_date,
-          'recipient_addrfield': recipient_addrfield,
+          'recipient_addrfield': recipient_addrfield.replace("\n", "\\\\\n"),
           'content_subject': content_subject,
           'content_opening': content_opening,
           'content_text': content_text,
@@ -84,7 +86,7 @@ def generate_letter_template_raw(sender_name, sender_streetaddress, sender_zipci
           'ps': f"\\ps{{{content_ps}}}" if content_ps else "",
           'encl': f"\\encl{{{content_enclosing}}}" if content_enclosing else "",
           'cc': f"\\cc{{{content_cc}}}" if content_cc else ""
-      }
+    })
   return template
 
 def generate_letter_template(form):
