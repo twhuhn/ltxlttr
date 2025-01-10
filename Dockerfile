@@ -14,10 +14,12 @@ WORKDIR /ltxlttr
 
 EXPOSE 8000
 
+RUN mkdir /data
+
 RUN pip install --no-cache-dir -r requirements.txt
 RUN python manage.py migrate
 RUN python manage.py collectstatic --noinput
 
 #VOLUME /data
 
-CMD ["gunicorn","ltxlttr.wsgi"]
+CMD ["gunicorn", "--bind", "0.0.0.0:8000", "ltxlttr.wsgi"]
