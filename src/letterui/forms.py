@@ -17,7 +17,7 @@ class LatexLetterForm(forms.Form):
     recipient_addrfield = forms.CharField(required=False, widget=forms.Textarea(attrs={'class': 'form-control input-field ', 'placeholder': 'Receiver'}))
     content_subject = forms.CharField(required=False, max_length=100, widget=forms.TextInput(attrs={'class': 'form-control input-field subject-field', 'placeholder': 'Subject'}))
     content_opening = forms.CharField(required=False, max_length=100, widget=forms.TextInput(attrs={'class': 'form-control input-field', 'placeholder': 'Opening'}))
-    content_text = forms.CharField(required=False, max_length=100, widget=forms.Textarea(attrs={'class': 'form-control input-field content-field', 'placeholder': 'Text...'}))
+    content_text = forms.CharField(required=False, widget=forms.Textarea(attrs={'class': 'form-control input-field content-field', 'placeholder': 'Text...'}))
     content_closing = forms.CharField(required=False, max_length=100, widget=forms.TextInput(attrs={'class': 'form-control input-field', 'placeholder': 'Closing'}))
     content_ps = forms.CharField(required=False, max_length=100, widget=forms.TextInput(attrs={'class': 'form-control input-field', 'placeholder': 'PS'}))
     content_enclosing = forms.CharField(required=False, max_length=100, widget=forms.TextInput(attrs={'class': 'form-control input-field', 'placeholder': 'Enclosing'}))
