@@ -32,7 +32,7 @@ def generate_letter_template_raw(sender_name, sender_streetaddress, sender_zipci
 \\makeatother
 
 \\setkomavar{{fromname}}{{{sender_name}}}
-\\setkomavar{{fromaddress}}{{{sender_streetaddress}\\\\{sender_zipcity}}}
+\\setkomavar{{fromaddress}}{{{fromaddress}}}
 {fromphone}
 {phonename}
 \\setkomavar{{fromemail}}{{{sender_email}}}
@@ -51,17 +51,15 @@ def generate_letter_template_raw(sender_name, sender_streetaddress, sender_zipci
 
 %\\renewcommand{{\\enclname}}{{Anlagen}}
 %\\setkomavar{{enclseparator}}{{: }}
+\\setkomavar{{subject}}{{{content_subject}}}
+
 \\pagestyle{{plain}}
 
-\\begin{{letter}}{{{recipient_addrfield}}}\\setkomavar{{subject}}{{{content_subject}}}
-\\opening{{{content_opening}}}
-{content_text}
-\\closing{{{content_closing}}}
-
+\\begin{{letter}}{{{recipient_addrfield}}}
+\\opening{{{content_opening}}}{content_text}\\closing{{{content_closing}}}
 {ps}
 {encl}
 {cc}
-
 \\end{{letter}}
 \\end{{document}}
 """.format(**{
@@ -71,6 +69,7 @@ def generate_letter_template_raw(sender_name, sender_streetaddress, sender_zipci
           'fromphone': f"\\setkomavar{{fromphone}}{{{sender_phone}}}" if sender_phone else "",
           'phonename': f"\\renewcommand{{\\phonename}}{{{sender_phonename}}}" if sender_phonename else "",
           'sender_email': sender_email,
+          'fromaddress': f"{sender_streetaddress}{'\\\\' if sender_streetaddress and sender_zipcity else ''}{sender_zipcity}",
           'yourref': f"\\setkomavar{{yourref}}{{{business_yourref}}}" if business_yourref else "",
           'yourmail': f"\\setkomavar{{yourmail}}{{{business_yourmailfrom}}}" if business_yourmailfrom else "",
           'myref': f"\\setkomavar{{myref}}{{{business_myref}}}" if business_myref else "",

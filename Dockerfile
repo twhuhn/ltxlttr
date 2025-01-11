@@ -11,10 +11,12 @@ RUN apt-get update && \
 
 COPY src /ltxlttr
 WORKDIR /ltxlttr
+RUN rm .env*
 
 EXPOSE 8000
 
 RUN mkdir /data
+COPY .env-example /data/.env
 
 RUN pip install --no-cache-dir -r requirements.txt
 RUN python manage.py migrate
