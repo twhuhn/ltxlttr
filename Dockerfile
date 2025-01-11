@@ -16,12 +16,11 @@ RUN rm .env*
 EXPOSE 8000
 
 RUN mkdir /data
+VOLUME /data
 COPY .env-example /data/.env
 
 RUN pip install --no-cache-dir -r requirements.txt
 RUN python manage.py migrate
 RUN python manage.py collectstatic --noinput
-
-#VOLUME /data
 
 CMD ["gunicorn", "--bind", "0.0.0.0:8000", "ltxlttr.wsgi"]
