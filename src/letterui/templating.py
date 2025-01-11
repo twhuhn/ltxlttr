@@ -56,7 +56,9 @@ def generate_letter_template_raw(sender_name, sender_streetaddress, sender_zipci
 \\pagestyle{{plain}}
 
 \\begin{{letter}}{{{recipient_addrfield}}}
-\\opening{{{content_opening}}}{content_text}\\closing{{{content_closing}}}
+\\opening{{{content_opening}}}
+{content_text}
+\\closing{{{content_closing}}}
 {ps}
 {encl}
 {cc}
@@ -69,7 +71,7 @@ def generate_letter_template_raw(sender_name, sender_streetaddress, sender_zipci
           'fromphone': f"\\setkomavar{{fromphone}}{{{sender_phone}}}" if sender_phone else "",
           'phonename': f"\\renewcommand{{\\phonename}}{{{sender_phonename}}}" if sender_phonename else "",
           'sender_email': sender_email,
-          'fromaddress': f"{sender_streetaddress}{'\\\\' if sender_streetaddress and sender_zipcity else ''}{sender_zipcity}",
+          'fromaddress': sender_streetaddress + ('\\\\' if sender_streetaddress and sender_zipcity else '')+sender_zipcity,
           'yourref': f"\\setkomavar{{yourref}}{{{business_yourref}}}" if business_yourref else "",
           'yourmail': f"\\setkomavar{{yourmail}}{{{business_yourmailfrom}}}" if business_yourmailfrom else "",
           'myref': f"\\setkomavar{{myref}}{{{business_myref}}}" if business_myref else "",
