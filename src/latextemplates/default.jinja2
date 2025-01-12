@@ -1,0 +1,83 @@
+{# This is a default template file which should always exists. #}
+
+\documentclass[fontsize=12pt, paper=a4, enlargefirstpage=on, pagenumber=headright, headsepline=on, parskip=half, fromalign=right, fromphone=on, fromrule=off, fromfax=off, fromemail=on, fromurl=off, fromlogo=off, addrfield=on, backaddress=on, subject=beforeopening, locfield=narrow, foldmarks=on, numericaldate=off, refline=narrow, draft=off]{scrlttr2}
+
+\usepackage[ngerman]{babel}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{url}
+
+\usepackage{marvosym}
+\DeclareUnicodeCharacter{20AC}{\EUR}
+\setkomafont{fromname}{\sffamily \LARGE}
+\setkomafont{fromaddress}{\sffamily}
+\setkomafont{pagenumber}{\sffamily}
+\setkomafont{subject}{\bfseries}
+\setkomafont{backaddress}{\mdseries}
+\usepackage{mathptmx}
+
+
+\begin{document}
+    \LoadLetterOption{DIN}
+    \makeatletter
+    \@setplength{firstheadvpos}{20mm}
+    \@setplength{firstheadwidth}{\paperwidth}
+    \ifdim \useplength{toaddrhpos}>\z@
+    \@addtoplength[-2]{firstheadwidth}{\useplength{toaddrhpos}}
+    \else
+    \@addtoplength[2]{firstheadwidth}{\useplength{toaddrhpos}}
+    \fi
+    \@setplength{foldmarkhpos}{6.5mm}
+    \makeatother
+
+    \setkomavar{fromname}{{ '{' }}{{ sender_name }}{{ '}' }}
+    \setkomavar{fromaddress}{{ '{' }}{{ sender_streetaddress }}\\{{ sender_zipcity }}{{ '}' }}
+
+    {% if sender_phone and sender_phonename %}
+    {{ sender_phone }}
+    {{ sender_phonename }}
+    {% endif %}
+
+    \setkomavar{fromemail}{{ '{' }} {{ sender_email }}{{ '}' }}
+    \setkomavar{backaddressseparator}{ -- }
+    \setkomavar{signature}{\vspace*{1.5cm}\\{{ sender_name }}}
+    \makeatother
+    {% if business_yourmailfrom %}
+    \setkomavar{yourref}{{ '{' }}{{ business_yourref }}{{ '}' }}
+    {% endif %}
+    {% if business_yourmailfrom %}
+    \setkomavar{yourmail}{{ '{' }}{{ business_yourref }}{{ '}' }}
+    {%endif%}
+    {% if business_yourmailfrom %}
+    \setkomavar{myref}{{ '{' }}{{ business_myref }}{{ '}' }}
+    {%endif%}
+    {% if business_yourmailfrom %}
+    \setkomavar{customer}{{ '{' }}{{ business_customernumber }}{{ '}' }}
+    {%endif%}
+    {% if business_invoicenumber %}
+    \setkomavar{invoice}{{ '{' }}{{ business_invoicenumber }}{{ '}' }}
+    {%endif%}
+    \setkomavar{place}{{ '{' }}{{ business_place }}{{ '}' }}
+    \setkomavar{date}{{ '{' }}{{ business_date }}{{ '}' }}
+    \setkomavar{placeseparator}{, den }
+
+    \renewcommand{\enclname}{Anlagen}
+    \setkomavar{enclseparator}{: }
+    \pagestyle{plain}
+
+    \begin{letter}{{ '{' }}{{ recipient_addrfield | replace('\n', '\\\\') }}{{ '}' }}\setkomavar{subject}{{ '{' }}{{ content_subject }}{{ '}' }}
+        \opening{{ '{' }}{{ content_opening }}{{ '}' }}
+        {{ content_text }}
+        \closing{{ '{' }}{{ content_closing }}{{ '}' }}
+
+        {% if content_ps %}
+        {{ content_ps }}
+        {% endif %}
+        {% if content_encl %}
+        {{ content_encl }}
+        {% endif %}
+        {% if content_cc %}
+        {{ content_cc }}
+        {% endif %}
+    \end{letter}
+\end{document}

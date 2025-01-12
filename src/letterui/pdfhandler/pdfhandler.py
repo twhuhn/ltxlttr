@@ -1,5 +1,8 @@
 import os
-from .templating import generate_letter_template as gentemplate
+import uuid 
+
+from pathlib import Path
+from jinja2 import Environment, FileSystemLoader
 
 def create_pdf(message):
     # Create a PDF file
@@ -17,5 +20,18 @@ def create_pdf(message):
     os.system(f"pdflatex -output-directory={temp_folder} {tex_file_path}")
     return pdf_file_path
 
-def generate_letter_template(form):
-    return gentemplate(form)
+def generate_letter_template(data: dict, templatename: str = 'default.jinja2'):
+  """
+  Generates the letter from a template and returns the latex string.
+  """
+  TEMPLATE_DIR = Path(__file__).resolve().parent.parent.parent / 'latextemplates'
+  TEMPLATE_PATH = TEMPLATE_DIR / templatename
+  
+  try:
+    fsloader = FileSystemLoader(TEMPLATE_DIR)
+    env = Environment(loader=fsloader)
+
+  except FileNotFoundError:
+    raise('No such Template named ' + templatename + 'or template was not found')
+
+  return env.get_template(templatename).render(data)
