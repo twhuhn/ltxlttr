@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect
 from .forms import LatexLetterForm
-from .templating import generate_letter_template
+from .pdfhandler.pdfhandler import create_pdf, generate_letter_template
 import os
 import uuid
 import json
