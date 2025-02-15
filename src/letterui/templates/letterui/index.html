@@ -1,50 +1,83 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <title>LatexLetter</title>
-        {% load django_bootstrap5 %}
-        {% bootstrap_css %}
-        {% bootstrap_javascript %}
 
-        {% load static %}
-        <link rel="stylesheet" href="{% static '/letterui/styles.css' %}">
-      </head>
+<head>
+  <title>LatexLetter</title>
+
+  {% load static %}
+  {% load django_bootstrap5 %}
+  {% bootstrap_css %}
+  {% bootstrap_javascript %}
+  <link rel="stylesheet" href="{% static '/letterui/styles.css' %}">
+
+  <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+    integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+    crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js"
+    integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+    crossorigin="anonymous"></script>
+</head>
+
 <body>
-        <div class="container">
-            <div class="row">
-              <div class="col heading">
-                <h1>Latex Letter Template Generator</h1>
-              </div>
-            </div>
-              <form method="POST" >
-                {% csrf_token %}
-                  <div class="row">
-                      <div class="col-md-6">
-                          {{ form.sender_name }}
-                          {{ form.sender_streetaddress }}
-                          {{ form.sender_zipcity }}
-                          {{ form.sender_phone }}
-                          {{ form.sender_phonename }}
-                          {{ form.sender_email }}
-                      </div>
-                      <div class="col-md-6">
-                          {{ form.recipient_addrfield }}
-                      </div>
-                  </div>
-                  <div class="row letter-content">
-                      <div class="col">
-                        {{ form.content_subject }}
-                        {{ form.content_opening }}
-                        {{ form.content_text }}
-                        {{ form.content_closing }}
-                        {{ form.content_ps }}
-                        {{ form.content_enclosing }}
-                        {{ form.content_cc }}
-                      </div>
-                  </div>
-                  <button type="submit" class="btn btn-primary mt-3">Submit</button>
-                  <a class="btn btn-danger clear-button" href="/clear">Clear</a>
-                </form>
-            </div>
+  <div class="container">
+    <div class="row">
+      <div class="col heading">
+        <h1>Latex Letter Template Generator</h1>
+      </div>
+    </div>
+    <form method="POST" target="_blank">
+      {% csrf_token %}
+      <div class="row letter-info">
+        <div class="col-md-6">
+          {{ form.sender_name }}
+          {{ form.sender_streetaddress }}
+          {{ form.sender_zipcity }}
+          {{ form.sender_phone }}
+          {{ form.sender_phonename }}
+          {{ form.sender_email }}
+        </div>
+        <div class="col-md-6">
+          {{ form.recipient_addrfield }}
+        </div>
+      </div>
+      <div class="row letter-business-fields">
+        <div class="col-md-3">
+          <button class="btn btn-primary" type="button" data-toggle="collapse" data-target=".businessFields"
+            aria-expanded="false" aria-controls="businessFields1 businessFields2">
+            Business Reference Fields
+          </button>
+        </div>
+        <div class="col-md">
+          <div class="collapse businessFields letter-business-fields-input" id="businessFields1">
+            {{ form.business_myref }}
+            {{ form.business_yourref }}
+            {{ form.business_yourmailfrom }}
+          </div>
+        </div>
+        <div class="col-md">
+          <div class="collapse businessFields letter-business-fields-input" id="businessFields2">
+            {{ form.business_customernumber }}
+            {{ form.business_invoicenumber }}
+            {{ form.business_place }}
+            {{ form.business_date }}
+          </div>
+        </div>
+      </div>
+      <div class="row letter-content">
+        <div class="col">
+          {{ form.content_subject }}
+          {{ form.content_opening }}
+          {{ form.content_text }}
+          {{ form.content_closing }}
+          {{ form.content_ps }}
+          {{ form.content_enclosing }}
+          {{ form.content_cc }}
+        </div>
+      </div>
+      <button type="submit" class="btn btn-primary mt-3">Submit</button>
+      <a class="btn btn-danger clear-button" href="/clear">Clear</a>
+    </form>
+  </div>
 </body>
+
 </html>
