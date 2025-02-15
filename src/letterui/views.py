@@ -1,7 +1,7 @@
 import json
 
 from django.shortcuts import render, redirect
-from django.http import HttpResponse
+from django.http import HttpResponse, HttpResponseServerError
 from datetime import datetime
 
 from .forms import LatexLetterForm
@@ -25,20 +25,20 @@ def home(request):
 
     if request.method == "POST":
         form = LatexLetterForm(request.POST)
-        print(form.errors)
         if form.is_valid():
             message = "Form submitted successfully!"
-            print(message)
-            print(form.cleaned_data)
             response = render(request, "letterui/index.html", {"form": form, "message": message})
             response.set_cookie('content', json.dumps(form.cleaned_data))
             template = generate_letter_template(form.cleaned_data)
-            outfile = create_pdf(message)
-            with open(outfile, 'rb') as pdf_file:
-                response = HttpResponse(pdf_file.read(), content_type='application/pdf')
-                timestamp = datetime.now().strftime("%Y-%m-%d_%H-%M-%S")
-                response['Content-Disposition'] = f'inline; filename={timestamp}.pdf'
-                return response  # Reset the form after submission
+            outfile = create_pdf(template)
+            try:
+                with open(outfile, 'rb') as pdf_file:
+                    response = HttpResponse(pdf_file.read(), content_type='application/pdf')
+                    timestamp = datetime.now().strftime("%Y-%m-%d_%H-%M-%S")
+                    response['Content-Disposition'] = f'inline; filename={timestamp}.pdf'
+                    return response  # Reset the form after submission
+            except FileNotFoundError:
+                return HttpResponseServerError('Failed to Create Latex File from Template\nTemplate content: ' + template)
 
     return render(request, "letterui/index.html", {"form": form, "message": message})
 
