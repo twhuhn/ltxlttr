@@ -27,13 +27,13 @@ def home(request):
         form = LatexLetterForm(request.POST)
         if form.is_valid():
             message = "Form submitted successfully!"
-            response = render(request, "letterui/index.html", {"form": form, "message": message})
-            response.set_cookie('content', json.dumps(form.cleaned_data))
             template = generate_letter_template(form.cleaned_data)
+            print(template)
             outfile = create_pdf(template)
             try:
                 with open(outfile, 'rb') as pdf_file:
                     response = HttpResponse(pdf_file.read(), content_type='application/pdf')
+                    response.set_cookie('content', json.dumps(form.cleaned_data))
                     timestamp = datetime.now().strftime("%Y-%m-%d_%H-%M-%S")
                     response['Content-Disposition'] = f'inline; filename={timestamp}.pdf'
                     return response  # Reset the form after submission
