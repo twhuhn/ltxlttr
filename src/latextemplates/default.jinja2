@@ -33,9 +33,12 @@
     \setkomavar{fromname}{{ '{' }}{{ sender_name }}{{ '}' }}
     \setkomavar{fromaddress}{{ '{' }}{{ sender_streetaddress }}\\{{ sender_zipcity }}{{ '}' }}
 
-    {% if sender_phone and sender_phonename %}
-    {{ sender_phone }}
-    {{ sender_phonename }}
+    {% if sender_phone %}
+    \setkomavar{fromphone}{{ '{' }}{{ sender_phone }}{{ '}' }}
+
+    {% if sender_phonename%}
+        \renewcommand{\phonename}{{ '{' }}{{sender_phonename}}{{ '}' }}
+    {% endif %}
     {% endif %}
 
     \setkomavar{fromemail}{{ '{' }} {{ sender_email }}{{ '}' }}
