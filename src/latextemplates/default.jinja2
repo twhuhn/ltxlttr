@@ -45,16 +45,16 @@
     \setkomavar{backaddressseparator}{ -- }
     \setkomavar{signature}{\vspace*{1.5cm}\\{{ sender_name }}}
     \makeatother
-    {% if business_yourmailfrom %}
+    {% if business_yourref %}
     \setkomavar{yourref}{{ '{' }}{{ business_yourref }}{{ '}' }}
     {% endif %}
     {% if business_yourmailfrom %}
-    \setkomavar{yourmail}{{ '{' }}{{ business_yourref }}{{ '}' }}
+    \setkomavar{yourmail}{{ '{' }}{{ business_yourmailfrom }}{{ '}' }}
     {%endif%}
-    {% if business_yourmailfrom %}
+    {% if business_myref %}
     \setkomavar{myref}{{ '{' }}{{ business_myref }}{{ '}' }}
     {%endif%}
-    {% if business_yourmailfrom %}
+    {% if business_customernumber %}
     \setkomavar{customer}{{ '{' }}{{ business_customernumber }}{{ '}' }}
     {%endif%}
     {% if business_invoicenumber %}
