@@ -7,10 +7,21 @@
     margin-bottom: 5px;
 }
 
+.letter-info {
+    border-bottom: 2px solid darkgray;
+}
+
+.letter-business-fields {
+    margin-top: 10px;
+}
+
+.letter-business-fields-input > * {
+    margin-top: 0;
+}
+
 .letter-content {
     margin-top: 10px;
     margin-bottom: 5px;
-    border-top: 2px solid darkgray;
 }
 
 .subject-field {

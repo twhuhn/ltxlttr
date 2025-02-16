@@ -33,25 +33,28 @@
     \setkomavar{fromname}{{ '{' }}{{ sender_name }}{{ '}' }}
     \setkomavar{fromaddress}{{ '{' }}{{ sender_streetaddress }}\\{{ sender_zipcity }}{{ '}' }}
 
-    {% if sender_phone and sender_phonename %}
-    {{ sender_phone }}
-    {{ sender_phonename }}
+    {% if sender_phone %}
+    \setkomavar{fromphone}{{ '{' }}{{ sender_phone }}{{ '}' }}
+
+    {% if sender_phonename%}
+        \renewcommand{\phonename}{{ '{' }}{{sender_phonename}}{{ '}' }}
+    {% endif %}
     {% endif %}
 
     \setkomavar{fromemail}{{ '{' }} {{ sender_email }}{{ '}' }}
     \setkomavar{backaddressseparator}{ -- }
     \setkomavar{signature}{\vspace*{1.5cm}\\{{ sender_name }}}
     \makeatother
-    {% if business_yourmailfrom %}
+    {% if business_yourref %}
     \setkomavar{yourref}{{ '{' }}{{ business_yourref }}{{ '}' }}
     {% endif %}
     {% if business_yourmailfrom %}
-    \setkomavar{yourmail}{{ '{' }}{{ business_yourref }}{{ '}' }}
+    \setkomavar{yourmail}{{ '{' }}{{ business_yourmailfrom }}{{ '}' }}
     {%endif%}
-    {% if business_yourmailfrom %}
+    {% if business_myref %}
     \setkomavar{myref}{{ '{' }}{{ business_myref }}{{ '}' }}
     {%endif%}
-    {% if business_yourmailfrom %}
+    {% if business_customernumber %}
     \setkomavar{customer}{{ '{' }}{{ business_customernumber }}{{ '}' }}
     {%endif%}
     {% if business_invoicenumber %}
